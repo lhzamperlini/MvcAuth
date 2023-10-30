@@ -1,0 +1,35 @@
+﻿@using MvcAuth.Mvc.ViewModels.Usuario;
+@model List<UsuarioViewModel>;
+@{
+
+}
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Sobrenome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach(var usuario in Model)
+        {
+            <tr>
+                <th scope="row">@usuario.Id</th>
+                <td>@usuario.Nome</td>
+                <td>@usuario.Sobrenome</td>
+                <td>@usuario.Email</td>
+                <td>
+                    <a asp-asp-controller="Usuario" class="btn btn-success" asp-route="Details" asp-route-id="@usuario.Id">Detalhes</a>
+                    <a asp-asp-controller="Usuario" class="btn btn-primary" asp-action="Editar" asp-route-id="@usuario.Id">Editar</a>
+                    <a asp-asp-controller="Usuario" class="btn btn-danger" asp-action="Delete" asp-route-id="@usuario.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

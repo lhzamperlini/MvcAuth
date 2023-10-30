@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcAuth", "MvcAuth\MvcAuth.csproj", "{0B1FB630-D755-402C-A7FA-048683287D28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcAuth.Domain", "MvcAuth.Domain\MvcAuth.Domain.csproj", "{680AF04A-95F3-44D8-BA31-E9D305816122}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcAuth.Domain", "MvcAuth.Domain\MvcAuth.Domain.csproj", "{680AF04A-95F3-44D8-BA31-E9D305816122}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcAuth.Repository", "MvcAuth.Repository\MvcAuth.Repository.csproj", "{90D83F95-DF78-4DBF-9BBE-4752A0ACA3D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcAuth.Repository", "MvcAuth.Repository\MvcAuth.Repository.csproj", "{90D83F95-DF78-4DBF-9BBE-4752A0ACA3D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcAuth.Application", "MvcAuth.Application\MvcAuth.Application.csproj", "{07DEFAF0-0DA5-42DC-A3CC-B51210884838}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcAuth.CrossCutting", "MvcAuth.CrossCutting\MvcAuth.CrossCutting.csproj", "{D8F80AE9-2EE5-4C11-B240-FA7DF32AC92C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcAuth.Mvc", "MvcAuth.Mvc\MvcAuth.Mvc.csproj", "{7C32099C-B645-4920-A3F6-193FD9F938F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0B1FB630-D755-402C-A7FA-048683287D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B1FB630-D755-402C-A7FA-048683287D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B1FB630-D755-402C-A7FA-048683287D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B1FB630-D755-402C-A7FA-048683287D28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{680AF04A-95F3-44D8-BA31-E9D305816122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{680AF04A-95F3-44D8-BA31-E9D305816122}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{680AF04A-95F3-44D8-BA31-E9D305816122}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +27,18 @@ Global
 		{90D83F95-DF78-4DBF-9BBE-4752A0ACA3D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90D83F95-DF78-4DBF-9BBE-4752A0ACA3D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90D83F95-DF78-4DBF-9BBE-4752A0ACA3D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07DEFAF0-0DA5-42DC-A3CC-B51210884838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07DEFAF0-0DA5-42DC-A3CC-B51210884838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07DEFAF0-0DA5-42DC-A3CC-B51210884838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07DEFAF0-0DA5-42DC-A3CC-B51210884838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8F80AE9-2EE5-4C11-B240-FA7DF32AC92C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F80AE9-2EE5-4C11-B240-FA7DF32AC92C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F80AE9-2EE5-4C11-B240-FA7DF32AC92C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F80AE9-2EE5-4C11-B240-FA7DF32AC92C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C32099C-B645-4920-A3F6-193FD9F938F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C32099C-B645-4920-A3F6-193FD9F938F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C32099C-B645-4920-A3F6-193FD9F938F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C32099C-B645-4920-A3F6-193FD9F938F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

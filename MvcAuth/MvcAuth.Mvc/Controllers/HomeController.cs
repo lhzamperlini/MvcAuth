@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MvcAuth.Models;
+using MvcAuth.Mvc.Models;
 using System.Diagnostics;
 
-namespace MvcAuth.Controllers;
+namespace MvcAuth.Mvc.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

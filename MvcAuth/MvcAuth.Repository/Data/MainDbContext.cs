@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace MvcAuth.Repository.Data;
-public class ApplicationDbContext : DbContext
+public class MainDbContext : DbContext
 {
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public MainDbContext(DbContextOptions<MainDbContext> options)
         : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -17,7 +17,7 @@ public class ApplicationDbContext : DbContext
             property.SetColumnType("varchar(90)");
         }
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(MainDbContext).Assembly);
         
         foreach (var property in modelBuilder.Model.GetEntityTypes()
           .SelectMany(x => x.GetForeignKeys()))

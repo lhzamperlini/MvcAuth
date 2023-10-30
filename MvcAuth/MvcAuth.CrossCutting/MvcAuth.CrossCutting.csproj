@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="IoC\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MvcAuth.Application\MvcAuth.Application.csproj" />
+    <ProjectReference Include="..\MvcAuth.Domain\MvcAuth.Domain.csproj" />
+    <ProjectReference Include="..\MvcAuth.Repository\MvcAuth.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
