@@ -13,9 +13,28 @@ public class UsuarioService : IUsuarioService
         _usuarioRepository = usuarioRepository;
     }
 
+    #region Auth
+
+    public async Task<Usuario> Autenticar(string email, string senha)
+    {
+        var usuario = await _usuarioRepository.ObterPorEmail(email);
+
+        if (usuario is null)
+            throw new Exception("Usuario não encontrado.");
+
+        if (!usuario.Senha.Equals(senha))
+            throw new Exception("Usuario ou senha incorretos");
+
+        return usuario;
+    }
+
+    #endregion
+
+    #region CRUD
+
     public async Task Cadastrar(Usuario usuario)
     {
-        if (await _usuarioRepository.ObterPorEmail(usuario.Email))
+        if (await _usuarioRepository.VerificarExistente(usuario.Email))
             throw new Exception("Um usuario com este email já está cadastrado.");
 
         await _usuarioRepository.Cadastrar(usuario);
@@ -33,7 +52,7 @@ public class UsuarioService : IUsuarioService
             if (usuarioAtual == null)
                 throw new Exception("Usuario não encontrado.");
 
-            if(!usuario.Email.Equals(usuarioAtual.Email) && await _usuarioRepository.ObterPorEmail(usuario.Email))
+            if(!usuario.Email.Equals(usuarioAtual.Email) && await _usuarioRepository.VerificarExistente(usuario.Email))
                 throw new Exception("Um usuario com este email já está cadastrado.");
 
             usuarioAtual.Nome = usuario.Nome;
@@ -55,4 +74,6 @@ public class UsuarioService : IUsuarioService
     public async Task<List<Usuario>> ObterLista() => await _usuarioRepository.ObterLista();
 
     public async Task<Usuario?> ObterPorId(Guid Id) => await _usuarioRepository.ObterPorId(Id);
+
+    #endregion
 }

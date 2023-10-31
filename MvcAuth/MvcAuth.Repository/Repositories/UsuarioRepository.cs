@@ -11,6 +11,7 @@ public class UsuarioRepository : CrudRepositoryBase<Usuario>, IUsuarioRepository
     {
     }
 
-    public async Task<bool> ObterPorEmail(string email) => await Query().AnyAsync(x => x.Email.Equals(email));
+    public async Task<bool> VerificarExistente(string email) => await Query().AnyAsync(x => x.Email.Equals(email));
+    public async Task<Usuario?> ObterPorEmail(string email) => await Query().FirstOrDefaultAsync(x => x.Email.Equals(email));
     
 }

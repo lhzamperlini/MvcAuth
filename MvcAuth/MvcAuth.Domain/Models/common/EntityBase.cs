@@ -20,6 +20,7 @@ public abstract class EntityBase
 
         return Id.Equals(compareTo.Id);
     }
+
     public static bool operator == (EntityBase a, EntityBase b)
     {
         if (ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;

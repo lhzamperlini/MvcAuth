@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MvcAuth.Mvc.Auth;
+using MvcAuth.Mvc.Controllers.common;
 using MvcAuth.Mvc.Models;
 using System.Diagnostics;
 
 namespace MvcAuth.Mvc.Controllers;
-public class HomeController : Controller
+public class HomeController : AuthenticatedController
 {
     private readonly ILogger<HomeController> _logger;
 
@@ -12,11 +15,13 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [CookieAuthorize("Administrador")]
     public IActionResult Index()
     {
         return View();
     }
 
+    [AllowAnonymous]
     public IActionResult Privacy()
     {
         return View();
