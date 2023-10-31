@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MvcAuth.Domain.Interfaces.Services;
 using MvcAuth.Mvc.Mappers;
 using MvcAuth.Mvc.ViewModels.Usuario;
@@ -22,6 +23,12 @@ public class UsuarioController : Controller
     [Route("/cadastro")]
     public async Task<IActionResult> Cadastro() => await Task.FromResult(View());
 
+    [Route("Deletar")]
+    public async Task<IActionResult> Deletar(Guid id)
+    {
+        var model = await _usuarioService.ObterPorId(id);
+        return model switch { null => NotFound(), _ => View(UsuarioMapper.ModelToViewModel(model)) };
+    }
 
     [Route("Editar")]
     public async Task<IActionResult> Editar(Guid Id)
@@ -81,7 +88,7 @@ public class UsuarioController : Controller
         return View(viewModel);
     }
 
-    [HttpPost("Deletar")]
+    [HttpPost]
     public async Task<IActionResult> ConfirmDelete(Guid Id)
     {
         try
