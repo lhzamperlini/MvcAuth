@@ -59,7 +59,10 @@ public class UsuarioController : Controller
             try
             {
                 if (!viewModel.Senha.Equals(viewModel.SenhaConfirmacao))
-                    return BadRequest("A senha e a confirmação não coincidem.");
+                {
+                    TempData["Erro"] = "As senhas não coincidem.";
+                    return View();
+                }
 
                 await _usuarioService.Cadastrar(UsuarioMapper.ViewModelToModel(viewModel));
                 return RedirectToAction("Index", "Home");
