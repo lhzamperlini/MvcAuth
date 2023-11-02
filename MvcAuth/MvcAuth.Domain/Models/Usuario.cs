@@ -1,4 +1,5 @@
-﻿using MvcAuth.Domain.Models.common;
+﻿using MvcAuth.Domain.Enums;
+using MvcAuth.Domain.Models.common;
 
 namespace MvcAuth.Domain.Models;
 public class Usuario : EntityBase
@@ -16,4 +17,5 @@ public class Usuario : EntityBase
     public string Senha { get; set; }
     public bool Ativo { get; set; }
     public bool Confirmado { get; set; }
+    public TipoUsuario TipoUsuario { get; set; }
 }

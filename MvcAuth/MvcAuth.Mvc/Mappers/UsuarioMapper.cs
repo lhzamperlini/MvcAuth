@@ -1,6 +1,6 @@
-﻿using MvcAuth.Domain.Models;
+﻿using MvcAuth.Domain.Enums;
+using MvcAuth.Domain.Models;
 using MvcAuth.Mvc.ViewModels.Usuario;
-using System.Reflection.Metadata.Ecma335;
 
 namespace MvcAuth.Mvc.Mappers;
 
@@ -20,6 +20,8 @@ public static class UsuarioMapper
 
         if (viewModel.Id != null)
             model.Id = viewModel.Id.Value;
+        else
+            model.TipoUsuario = TipoUsuario.Comum;
 
         return model;
     }
@@ -44,6 +46,7 @@ public static class UsuarioMapper
             Nome = model.Nome,
             Sobrenome = model.Sobrenome,
             Email = model.Email,
+            TipoUsuario = model.TipoUsuario
         };
     }
 
@@ -55,10 +58,4 @@ public static class UsuarioMapper
             viewModels.Add(ModelToViewModel(model));
         return viewModels;
     }
-
-    
-
-   
-
-
 }

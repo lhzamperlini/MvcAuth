@@ -20,10 +20,17 @@ public class UsuarioController : Controller
 
     public async Task<IActionResult> Index() => View(UsuarioMapper.ModelToViewModelLista(await _usuarioService.ObterLista()));
 
+    [Route("detalhes")]
+    public async Task<IActionResult> Detalhes(Guid id)
+    {
+        var model = await _usuarioService.ObterPorId(id);
+        return model switch { null => NotFound(), _ => View(UsuarioMapper.ModelToViewModel(model)) };
+    }
+
     [Route("/cadastro")]
     public async Task<IActionResult> Cadastro() => await Task.FromResult(View());
 
-    [Route("Deletar")]
+    [Route("deletar")]
     public async Task<IActionResult> Deletar(Guid id)
     {
         var model = await _usuarioService.ObterPorId(id);

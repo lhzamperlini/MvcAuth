@@ -49,7 +49,7 @@ public class UsuarioService : IUsuarioService
         {
             var usuarioAtual = await _usuarioRepository.ObterPorId(usuario.Id);
 
-            if (usuarioAtual == null)
+            if (usuarioAtual is null)
                 throw new Exception("Usuario não encontrado.");
 
             if(!usuario.Email.Equals(usuarioAtual.Email) && await _usuarioRepository.VerificarExistente(usuario.Email))
@@ -61,9 +61,9 @@ public class UsuarioService : IUsuarioService
 
             await _usuarioRepository.Atualizar(usuarioAtual);
         }
-        catch (DBConcurrencyException ex)
+        catch (DBConcurrencyException)
         {
-            throw new Exception("Outra pessoa está tentando editar esse usuario no momento");
+            throw new Exception("Outra pessoa está tentando editar esse usuario no momento.");
         }
         catch (Exception ex)
         {

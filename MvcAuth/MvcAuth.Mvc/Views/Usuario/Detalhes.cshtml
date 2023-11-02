@@ -1,7 +1,6 @@
 ﻿@using MvcAuth.Mvc.ViewModels.Usuario;
 @model UsuarioViewModel;
 @*
-
 *@
 @{
 }
@@ -16,7 +15,7 @@
     <div class="panel panel-body">
 
         <div>
-            <h5>Está certo que deseja excluir este registro?</h5>
+            <h5>Detalhes do Usuário</h5>
             <hr />
             <dl class="dl-horizontal">
                 <dt>
@@ -29,7 +28,7 @@
         </div>
         <form asp-asp-controller="Usuario" asp-action="ConfirmDelete">
             <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Confirmar Deleção" class="btn btn-danger" />
+            <input type="submit" value="Deletar" class="btn btn-danger" />
             <a class="btn btn-info" asp-asp-controller="Usuario" asp-action="Index">Voltar para a Lista</a>
         </form>
 
