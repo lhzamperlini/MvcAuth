@@ -1,6 +1,7 @@
 ﻿@using MvcAuth.Mvc.ViewModels.Auth;
 @model LoginViewModel;
 @{
+    var sucesso = TempData["Sucesso"] ?? "";
     var erro = TempData["Erro"] ?? "";
 }
 
@@ -8,6 +9,12 @@
 {
     <div class="alert alert-danger" role="alert">
         @erro
+    </div>
+}
+@if (!string.IsNullOrEmpty(sucesso.ToString()))
+{
+    <div class="alert alert-success" role="alert">
+        @sucesso
     </div>
 }
 

@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using MvcAuth.Domain.Interfaces.Services;
-using MvcAuth.Mvc.Auth;
-using MvcAuth.Mvc.Controllers.common;
 using MvcAuth.Mvc.Mappers;
+using MvcAuth.Mvc.ViewModels.Auth;
 using MvcAuth.Mvc.ViewModels.Usuario;
 
 namespace MvcAuth.Mvc.Controllers;
-
-[CookieAuthorize("Administrador")]
-public class UsuarioController : AuthenticatedController
+public class UsuarioController : Controller
 {
     private readonly IUsuarioService _usuarioService;
 
@@ -19,29 +14,27 @@ public class UsuarioController : AuthenticatedController
         _usuarioService = usuarioService;
     }
 
-    #region Views
+    public async Task<IActionResult> Index()
+    {
+        return View(UsuarioMapper.ModelToViewModelLista(await _usuarioService.ObterLista()));
+    }
 
-    public async Task<IActionResult> Index() => View(UsuarioMapper.ModelToViewModelLista(await _usuarioService.ObterLista()));
-
-    [Route("detalhes")]
     public async Task<IActionResult> Detalhes(Guid id)
     {
         var model = await _usuarioService.ObterPorId(id);
         return model switch { null => NotFound(), _ => View(UsuarioMapper.ModelToViewModel(model)) };
     }
 
-    [Route("/cadastro")]
-    [AllowAnonymous]
+    [HttpGet("/Cadastro")]
     public async Task<IActionResult> Cadastro() => await Task.FromResult(View());
 
-    [Route("deletar")]
+
     public async Task<IActionResult> Deletar(Guid id)
     {
         var model = await _usuarioService.ObterPorId(id);
         return model switch { null => NotFound(), _ => View(UsuarioMapper.ModelToViewModel(model)) };
     }
 
-    [Route("Editar")]
     public async Task<IActionResult> Editar(Guid Id)
     {
         var usuario = await _usuarioService.ObterPorId(Id);
@@ -51,13 +44,10 @@ public class UsuarioController : AuthenticatedController
         return View(UsuarioMapper.ModelToViewModel(usuario));
     }
 
-    #endregion
-
     #region Ações
 
-    [HttpPost("Cadastro")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Cadastro(UsuarioCadastroViewModel viewModel)
+    [HttpPost]
+    public async Task<IActionResult> CadastroConfirm(UsuarioCadastroViewModel viewModel)
     {
         if (ModelState.IsValid)
         {
@@ -66,11 +56,13 @@ public class UsuarioController : AuthenticatedController
                 if (!viewModel.Senha.Equals(viewModel.SenhaConfirmacao))
                 {
                     TempData["Erro"] = "As senhas não coincidem.";
-                    return View();
+                    return RedirectToAction(nameof(Cadastro));
                 }
 
                 await _usuarioService.Cadastrar(UsuarioMapper.ViewModelToModel(viewModel));
-                return RedirectToAction("Index", "Home");
+                
+                TempData["Sucesso"] = "Cadastro efetuado com sucesso, realize o login abaixo.";
+                return RedirectToAction("Index", "Login");
             }
             catch (Exception ex)
             {
@@ -81,7 +73,7 @@ public class UsuarioController : AuthenticatedController
         return View(viewModel);
     }
 
-    [HttpPost("Editar")]
+    [HttpPost]
     public async Task<IActionResult> Editar(Guid Id, UsuarioViewModel viewModel)
     {
         if (Id != viewModel.Id)
@@ -116,7 +108,6 @@ public class UsuarioController : AuthenticatedController
             return BadRequest(ex.Message);
         }
     }
-
 
     #endregion
 
