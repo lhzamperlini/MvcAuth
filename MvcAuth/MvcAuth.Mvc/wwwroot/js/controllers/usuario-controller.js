@@ -1,0 +1,3 @@
+﻿function baleia() {
+    alert("baleia")
+}
