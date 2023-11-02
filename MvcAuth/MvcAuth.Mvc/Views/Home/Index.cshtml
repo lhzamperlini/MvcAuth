@@ -5,11 +5,15 @@
     var usuario = new UsuarioLogado(User);
 }
 
+<div class="container">
+   <h1>Bom dia zap zap</h1>
 
-@if (usuario.IsAutenticado)
-{
-    <div class="text-center">
-        <h1 class="display-4">Bem Vindo, @usuario.NomeDeUsuario</h1>
-    </div>
-}
+    @if (usuario.IsAutenticado)
+    {
+        <div class="text-center">
+            <h1 class="display-4">Bem Vindo, @usuario.NomeDeUsuario</h1>
+        </div>
+    }
+</div>
+
 

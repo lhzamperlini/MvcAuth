@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcAuth.Application", "MvcA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcAuth.CrossCutting", "MvcAuth.CrossCutting\MvcAuth.CrossCutting.csproj", "{D8F80AE9-2EE5-4C11-B240-FA7DF32AC92C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcAuth.Mvc", "MvcAuth.Mvc\MvcAuth.Mvc.csproj", "{7C32099C-B645-4920-A3F6-193FD9F938F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcAuth.Mvc", "MvcAuth.Mvc\MvcAuth.Mvc.csproj", "{7C32099C-B645-4920-A3F6-193FD9F938F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

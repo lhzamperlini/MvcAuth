@@ -1,0 +1,20 @@
+﻿body{
+    margin-bottom: 0;
+}
+*, html {
+    font-size: 10px;
+    overflow-x: hidden;
+}
+
+.navbar-brand {
+    display: none !important;
+}
+
+.body{
+    display: flex;
+}
+
+.body__right {
+    width: calc(100vw - 300px);
+    height: 100vh;
+}

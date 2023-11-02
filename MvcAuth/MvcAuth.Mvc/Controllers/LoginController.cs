@@ -39,7 +39,7 @@ public class LoginController : AuthenticatedController
 
             await SalvarAutenticacao(usuario);
             
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Menu");
         }
         catch (Exception ex)
         {

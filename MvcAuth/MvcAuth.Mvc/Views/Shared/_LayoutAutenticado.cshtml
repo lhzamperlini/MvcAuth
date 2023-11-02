@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    TempData["IsMenu"] = true;
+}
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
@@ -9,19 +13,19 @@
     <link rel="stylesheet" href="~/MvcAuth.Mvc.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <partial name="PartialViews/Core/_cabecalho" />
-    </header>
 
-    <main role="main" class="container">
-        @RenderBody()
+    <main role="main" class="body">
+        <div class="body__left">
+            <partial name="PartialViews/Core/_sidenav" />
+        </div>
+        <div class="body__right">
+            <partial name="PartialViews/Core/_cabecalho" />
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
     </main>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - MvcAuth.Mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

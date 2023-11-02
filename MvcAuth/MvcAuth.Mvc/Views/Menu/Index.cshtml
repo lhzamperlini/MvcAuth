@@ -1,0 +1,10 @@
+﻿@using MvcAuth.Mvc.ViewModels.Usuario;
+@{
+    Layout = "_LayoutAutenticado";
+    var usuario = new UsuarioLogado(User);
+}
+
+<div class="row">
+    <h1>Olá, @usuario.NomeDeUsuario</h1>
+</div>
+
