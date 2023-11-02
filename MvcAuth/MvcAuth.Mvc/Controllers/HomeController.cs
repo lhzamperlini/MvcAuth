@@ -15,7 +15,7 @@ public class HomeController : AuthenticatedController
         _logger = logger;
     }
 
-    [CookieAuthorize("Administrador")]
+    [CookieAuthorize("Comum")]
     public IActionResult Index()
     {
         return View();

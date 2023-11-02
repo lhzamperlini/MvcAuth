@@ -6,6 +6,7 @@ namespace MvcAuth.Mvc.ViewModels.Usuario;
 
 public class UsuarioViewModel
 {
+
     [Key]
     public Guid Id { get; set; }
 

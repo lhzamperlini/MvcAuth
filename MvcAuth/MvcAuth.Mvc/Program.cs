@@ -36,6 +36,7 @@ public class Program
                     options.LogoutPath = "/Logout";
                 });
 
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<IUsuarioService, UsuarioService>();
         builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         builder.Services.AddScoped(typeof(ICrudRepositoryBase<>), typeof(CrudRepositoryBase<>));

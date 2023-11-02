@@ -18,9 +18,9 @@ public class AuthenticatedController : Controller
         var claims = new List<Claim>
         {
                 new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                new Claim(ClaimTypes.Name, usuario.Email),
+                new Claim(ClaimTypes.Email, usuario.Email),
                 new Claim("NomeCompleto", usuario.Nome),
-                new Claim(ClaimTypes.Role, "Administrador"),
+                new Claim(ClaimTypes.Role, usuario.TipoUsuario.ToString()),
         };
 
         var authProperties = new AuthenticationProperties

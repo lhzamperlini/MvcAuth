@@ -1,11 +1,13 @@
 ﻿using MvcAuth.Domain.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace MvcAuth.Mvc.ViewModels.Usuario;
 
 public class UsuarioCadastroViewModel
 {
+
     [Key]
     public Guid? Id { get; set; }
 
