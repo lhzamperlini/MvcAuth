@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcAuth.Domain.Interfaces.Services;
+using MvcAuth.Mvc.Auth;
+using MvcAuth.Mvc.Controllers.common;
 using MvcAuth.Mvc.Mappers;
 using MvcAuth.Mvc.ViewModels.Usuario;
 
 namespace MvcAuth.Mvc.Controllers;
 
-[Route("/usuario/")]
-public class UsuarioController : Controller
+[CookieAuthorize("Administrador")]
+public class UsuarioController : AuthenticatedController
 {
     private readonly IUsuarioService _usuarioService;
 
@@ -28,6 +31,7 @@ public class UsuarioController : Controller
     }
 
     [Route("/cadastro")]
+    [AllowAnonymous]
     public async Task<IActionResult> Cadastro() => await Task.FromResult(View());
 
     [Route("deletar")]
@@ -52,6 +56,7 @@ public class UsuarioController : Controller
     #region Ações
 
     [HttpPost("Cadastro")]
+    [AllowAnonymous]
     public async Task<IActionResult> Cadastro(UsuarioCadastroViewModel viewModel)
     {
         if (ModelState.IsValid)

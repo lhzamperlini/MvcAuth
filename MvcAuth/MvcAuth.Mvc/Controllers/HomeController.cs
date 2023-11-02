@@ -6,7 +6,7 @@ using MvcAuth.Mvc.Models;
 using System.Diagnostics;
 
 namespace MvcAuth.Mvc.Controllers;
-public class HomeController : AuthenticatedController
+public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
@@ -15,13 +15,11 @@ public class HomeController : AuthenticatedController
         _logger = logger;
     }
 
-    [CookieAuthorize("Comum")]
     public IActionResult Index()
     {
         return View();
     }
 
-    [AllowAnonymous]
     public IActionResult Privacy()
     {
         return View();
