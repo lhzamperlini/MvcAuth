@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MvcAuth.Domain.Interfaces.Services;
+using MvcAuth.Mvc.Auth;
+using MvcAuth.Mvc.Controllers.common;
 using MvcAuth.Mvc.Mappers;
 using MvcAuth.Mvc.ViewModels.Auth;
 using MvcAuth.Mvc.ViewModels.Usuario;
 
 namespace MvcAuth.Mvc.Controllers;
-public class UsuarioController : Controller
+public class UsuarioController : AuthenticatedController
 {
     private readonly IUsuarioService _usuarioService;
 
@@ -14,39 +17,26 @@ public class UsuarioController : Controller
         _usuarioService = usuarioService;
     }
 
-    public async Task<IActionResult> Index()
-    {
-        return View(UsuarioMapper.ModelToViewModelLista(await _usuarioService.ObterLista()));
-    }
 
-    public async Task<IActionResult> Detalhes(Guid id)
-    {
-        var model = await _usuarioService.ObterPorId(id);
-        return model switch { null => NotFound(), _ => View(UsuarioMapper.ModelToViewModel(model)) };
-    }
+    #region Usuario
 
     [HttpGet("/Cadastro")]
     public async Task<IActionResult> Cadastro() => await Task.FromResult(View());
 
-
-    public async Task<IActionResult> Deletar(Guid id)
+    [HttpGet("/Meu-Perfil")]
+    [CookieAuthorize]
+    public async Task<IActionResult> MeuPerfil()
     {
-        var model = await _usuarioService.ObterPorId(id);
-        return model switch { null => NotFound(), _ => View(UsuarioMapper.ModelToViewModel(model)) };
-    }
-
-    public async Task<IActionResult> Editar(Guid Id)
-    {
-        var usuario = await _usuarioService.ObterPorId(Id);
-        if (usuario == null)
-            return NotFound();
-
+        var usuario = await _usuarioService.ObterPorId(UsuarioId);
         return View(UsuarioMapper.ModelToViewModel(usuario));
     }
 
-    #region Ações
+    #endregion
 
+    #region Ações Usuario
+    
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CadastroConfirm(UsuarioCadastroViewModel viewModel)
     {
         if (ModelState.IsValid)
@@ -60,7 +50,7 @@ public class UsuarioController : Controller
                 }
 
                 await _usuarioService.Cadastrar(UsuarioMapper.ViewModelToModel(viewModel));
-                
+
                 TempData["Sucesso"] = "Cadastro efetuado com sucesso, realize o login abaixo.";
                 return RedirectToAction("Index", "Login");
             }
@@ -73,7 +63,75 @@ public class UsuarioController : Controller
         return View(viewModel);
     }
 
+    [HttpPost("/ConfirmarAlteracao")]
+    [CookieAuthorize]
+    public async Task<IActionResult> MeuPerfil(UsuarioViewModel viewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            if (!UsuarioId.Equals(viewModel.Id))
+            {
+                TempData["Erro"] = "Você não pode alterar um perfil que não seja o seu.";
+                return View(viewModel);
+            }
+
+            try
+            {
+                await _usuarioService.Atualizar(UsuarioMapper.ViewModelToModel(viewModel));
+                TempData["Sucesso"] = "Seu perfil foi atualizado com sucesso!";
+                return View(viewModel);
+            }
+            catch(Exception ex)
+            {
+                TempData["Erro"] = "Algo deu errado ao atualizar o seu perfil";
+                return View(viewModel);
+            }
+        }
+
+        TempData["Erro"] = "Revise seus dados.";
+        return View(viewModel);
+    }
+
+    #endregion
+
+    #region Admin
+
+    [CookieAuthorize("Administrador")]
+    public async Task<IActionResult> Index()
+    {
+        return View(UsuarioMapper.ModelToViewModelLista(await _usuarioService.ObterLista()));
+    }
+
+    [CookieAuthorize("Administrador")]
+    public async Task<IActionResult> Detalhes(Guid id)
+    {
+        var model = await _usuarioService.ObterPorId(id);
+        return model switch { null => NotFound(), _ => View(UsuarioMapper.ModelToViewModel(model)) };
+    }
+
+    [CookieAuthorize("Administrador")]
+    public async Task<IActionResult> Deletar(Guid id)
+    {
+        var model = await _usuarioService.ObterPorId(id);
+        return model switch { null => NotFound(), _ => View(UsuarioMapper.ModelToViewModel(model)) };
+    }
+
+    [CookieAuthorize("Administrador")]
+    public async Task<IActionResult> Editar(Guid Id)
+    {
+        var usuario = await _usuarioService.ObterPorId(Id);
+        if (usuario == null)
+            return NotFound();
+
+        return View(UsuarioMapper.ModelToViewModel(usuario));
+    }
+
+    #endregion
+
+    #region Ações Admin
+
     [HttpPost]
+    [CookieAuthorize("Administrador")]
     public async Task<IActionResult> Editar(Guid Id, UsuarioViewModel viewModel)
     {
         if (Id != viewModel.Id)
@@ -96,6 +154,7 @@ public class UsuarioController : Controller
     }
 
     [HttpPost]
+    [CookieAuthorize("Administrador")]
     public async Task<IActionResult> ConfirmDelete(Guid Id)
     {
         try

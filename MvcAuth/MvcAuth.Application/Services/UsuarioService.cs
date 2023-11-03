@@ -71,6 +71,16 @@ public class UsuarioService : IUsuarioService
         }
     }
 
+    public async Task Atualizar(Usuario model)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(model.Id);
+
+        usuario.Nome = model.Nome;
+        usuario.Sobrenome = model.Sobrenome;
+        usuario.Email = model.Email;
+
+        await _usuarioRepository.Atualizar(usuario);
+    }
     public async Task<List<Usuario>> ObterLista() => await _usuarioRepository.ObterLista();
 
     public async Task<Usuario?> ObterPorId(Guid Id) => await _usuarioRepository.ObterPorId(Id);
