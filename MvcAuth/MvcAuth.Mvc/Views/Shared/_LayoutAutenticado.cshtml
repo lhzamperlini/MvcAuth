@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MvcAuth.Mvc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MvcAuth.Mvc.styles.css" asp-append-version="true" />
 </head>
@@ -19,10 +20,15 @@
             <partial name="PartialViews/Core/_sidenav" />
         </div>
         <div class="body__right">
-            <partial name="PartialViews/Core/_cabecalho" />
-            <div class="container">
+
+            <div class="body__right-header">
+                <partial name="PartialViews/Core/_cabecalho" />
+            </div>
+
+            <div class="body__right-content">
                 @RenderBody()
             </div>
+
         </div>
     </main>
 
