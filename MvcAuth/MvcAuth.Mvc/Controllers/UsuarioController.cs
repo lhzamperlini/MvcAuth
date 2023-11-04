@@ -30,11 +30,16 @@ public class UsuarioController : AuthenticatedController
         var usuario = await _usuarioService.ObterPorId(UsuarioId);
         return View(UsuarioMapper.ModelToViewModel(usuario));
     }
+    [HttpGet("/Alterar-Senha")]
+    public async Task<IActionResult> AlterarSenha()
+    {
+        return await Task.FromResult(View());
+    }
 
     #endregion
 
     #region Ações Usuario
-    
+
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> CadastroConfirm(UsuarioCadastroViewModel viewModel)
@@ -81,7 +86,7 @@ public class UsuarioController : AuthenticatedController
                 TempData["Sucesso"] = "Seu perfil foi atualizado com sucesso!";
                 return View(viewModel);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 TempData["Erro"] = "Algo deu errado ao atualizar o seu perfil";
                 return View(viewModel);
@@ -90,6 +95,33 @@ public class UsuarioController : AuthenticatedController
 
         TempData["Erro"] = "Revise seus dados.";
         return View(viewModel);
+    }
+
+    [HttpPost("/Alterar-Senha")]
+    public async Task<IActionResult> AlterarSenha(UsuarioAlterarSenha viewModel)
+    {
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                if (!viewModel.NovaSenha.Equals(viewModel.ConfirmacaoSenha))
+                {
+                    TempData["Erro"] = "A nova senha e a confirmação não coincidem.";
+                    return View(viewModel);
+                }
+
+                await _usuarioService.AlterarSenha(UsuarioId, viewModel.SenhaAntiga, viewModel.NovaSenha);
+                TempData["Sucesso"] = "Sua senha foi atualizada com sucesso!";
+                return View();
+            }
+            
+            return View(viewModel); 
+        }
+        catch (Exception ex)
+        {
+            TempData["Erro"] = "Algo deu errado ao atualizar a sua senha.";
+            return View(viewModel);
+        }
     }
 
     #endregion

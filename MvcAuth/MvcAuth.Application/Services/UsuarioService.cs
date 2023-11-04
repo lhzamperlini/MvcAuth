@@ -32,16 +32,23 @@ public class UsuarioService : IUsuarioService
 
     #region CRUD
 
+    //TODO Soft Delete
+    public async Task Deletar(Guid Id) => await _usuarioRepository.Deletar(Id);
+
+    public async Task<List<Usuario>> ObterLista() => await _usuarioRepository.ObterLista();
+
+    public async Task<Usuario?> ObterPorId(Guid Id) => await _usuarioRepository.ObterPorId(Id);
+
     public async Task Cadastrar(Usuario usuario)
     {
         if (await _usuarioRepository.VerificarExistente(usuario.Email))
             throw new Exception("Um usuario com este email já está cadastrado.");
 
+        usuario.Confirmado = false;
+        usuario.Ativo = true;
+
         await _usuarioRepository.Cadastrar(usuario);
     }
-
-    //TODO Soft Delete
-    public async Task Deletar(Guid Id) => await _usuarioRepository.Deletar(Id);
 
     public async Task Editar(Usuario usuario)
     {
@@ -52,7 +59,7 @@ public class UsuarioService : IUsuarioService
             if (usuarioAtual is null)
                 throw new Exception("Usuario não encontrado.");
 
-            if(!usuario.Email.Equals(usuarioAtual.Email) && await _usuarioRepository.VerificarExistente(usuario.Email))
+            if (!usuario.Email.Equals(usuarioAtual.Email) && await _usuarioRepository.VerificarExistente(usuario.Email))
                 throw new Exception("Um usuario com este email já está cadastrado.");
 
             usuarioAtual.Nome = usuario.Nome;
@@ -75,15 +82,29 @@ public class UsuarioService : IUsuarioService
     {
         var usuario = await _usuarioRepository.ObterPorId(model.Id);
 
+        if (usuario is null)
+            throw new Exception("Usuario não encontrado.");
+
         usuario.Nome = model.Nome;
         usuario.Sobrenome = model.Sobrenome;
         usuario.Email = model.Email;
 
         await _usuarioRepository.Atualizar(usuario);
     }
-    public async Task<List<Usuario>> ObterLista() => await _usuarioRepository.ObterLista();
 
-    public async Task<Usuario?> ObterPorId(Guid Id) => await _usuarioRepository.ObterPorId(Id);
+    public async Task AlterarSenha(Guid usuarioId, string senhaAntiga, string novaSenha)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(usuarioId);
+        if (usuario is null)
+            throw new Exception("Usuario não encontrado.");
+
+        if (usuario.Senha != senhaAntiga)
+            throw new Exception("Senha antiga incorreta.");
+
+        usuario.Senha = novaSenha;
+        await _usuarioRepository.Atualizar(usuario);
+    }
+
 
     #endregion
 }

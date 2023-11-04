@@ -1,0 +1,46 @@
+﻿@using MvcAuth.Mvc.ViewModels.Usuario;
+@model UsuarioAlterarSenha;
+@{
+    Layout = "_LayoutAutenticado";
+    var erro = TempData["Erro"] ?? "";
+    var sucesso = TempData["Sucesso"] ?? "";
+    
+}
+
+@if (!string.IsNullOrEmpty(erro.ToString()))
+{
+    <div class="alert alert-danger" role="alert">
+        @erro
+    </div>
+}
+@if (!string.IsNullOrEmpty(sucesso.ToString()))
+{
+    <div class="alert alert-success" role="alert">
+        @sucesso
+    </div>
+}
+
+<form asp-controller="Usuario" asp-action="AlterarSenha" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="SenhaAntiga" class="control-label"></label>
+        <input asp-for="SenhaAntiga" type="password" placeholder="Digite a sua senha antiga" class="form-control" />
+        <span asp-validation-for="SenhaAntiga" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NovaSenha" class="control-label"></label>
+        <input asp-for="NovaSenha" type="password" placeholder="Digite a sua nova senha" class="form-control" />
+        <span asp-validation-for="NovaSenha" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmacaoSenha" class="control-label"></label>
+        <input asp-for="ConfirmacaoSenha" type="password" placeholder="Digite a confirmação da nova senha" class="form-control" />
+        <span asp-validation-for="ConfirmacaoSenha" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-4 col-12">
+        <input type="submit" value="Cadastre Se" class="btn btn-info mx-auto" />
+    </div>
+</form>

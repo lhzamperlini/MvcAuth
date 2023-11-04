@@ -10,4 +10,5 @@ public interface IUsuarioService
     Task Deletar(Guid Id);
     Task<List<Usuario>> ObterLista();
     Task<Usuario?> ObterPorId(Guid Id);
+    Task AlterarSenha(Guid usuarioId, string senhaAntiga, string novaSenha);
 }

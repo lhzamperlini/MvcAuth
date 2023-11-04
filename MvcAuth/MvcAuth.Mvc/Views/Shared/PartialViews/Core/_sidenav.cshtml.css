@@ -31,9 +31,15 @@
 .sidenav__box {
     width: 80%;
     display: flex;
+    flex-wrap: wrap;
     margin: 0 auto;
     border-bottom: solid 1px #ffffff;
     flex-wrap: wrap;
+    position: relative;
+}
+
+.sidenav__box-item{
+    width: 100%;
     position: relative;
 }
 
