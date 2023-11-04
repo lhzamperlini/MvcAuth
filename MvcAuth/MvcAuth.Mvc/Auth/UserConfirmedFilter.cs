@@ -9,16 +9,18 @@ public class UserConfirmedFilter : ActionFilterAttribute
 
     public UserConfirmedFilter() { }
 
-    public override void OnActionExecuting(ActionExecutingContext filterContext)
+    public override void OnActionExecuted(ActionExecutedContext filterContext)
     {
         var isConfirmado = filterContext.HttpContext.User.FindFirstValue("Confirmado");
+        var isRotaConfirmarCadastro = filterContext.RouteData.Values.Values.Contains("ConfirmarCadastro");
 
-        if (isConfirmado != null)
+
+        if (isConfirmado != null && !isRotaConfirmarCadastro)
         {
             if (!isConfirmado.ToLower().Equals("true"))
             {
                 filterContext.Result = new RedirectToRouteResult(new { action = "confirmar-cadastro", controller = "usuario"});
-                base.OnActionExecuting(filterContext);
+                base.OnActionExecuted(filterContext);
             }
         }       
     }

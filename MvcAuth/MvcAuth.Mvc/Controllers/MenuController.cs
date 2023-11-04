@@ -5,9 +5,9 @@ using MvcAuth.Mvc.Controllers.common;
 namespace MvcAuth.Mvc.Controllers;
 
 [CookieAuthorize]
+[UserConfirmedFilter]
 public class MenuController : AuthenticatedController
 {
-    [UserConfirmedFilter]
     public IActionResult Index()
     {
         return View();

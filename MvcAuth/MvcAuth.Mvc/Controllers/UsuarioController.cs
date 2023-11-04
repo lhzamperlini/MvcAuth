@@ -8,6 +8,7 @@ using MvcAuth.Mvc.ViewModels.Auth;
 using MvcAuth.Mvc.ViewModels.Usuario;
 
 namespace MvcAuth.Mvc.Controllers;
+[UserConfirmedFilter]
 public class UsuarioController : AuthenticatedController
 {
     private readonly IUsuarioService _usuarioService;
@@ -30,6 +31,15 @@ public class UsuarioController : AuthenticatedController
         var usuario = await _usuarioService.ObterPorId(UsuarioId);
         return View(UsuarioMapper.ModelToViewModel(usuario));
     }
+
+    [HttpGet]
+    [Route("/Usuario/Confirmar-Cadastro")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ConfirmarCadastro()
+    {
+        return await Task.FromResult(View());
+    }
+
     [HttpGet("/Alterar-Senha")]
     public async Task<IActionResult> AlterarSenha()
     {
@@ -40,9 +50,9 @@ public class UsuarioController : AuthenticatedController
 
     #region Ações Usuario
 
-    [HttpPost]
+    [HttpPost("/Cadastro")]
     [AllowAnonymous]
-    public async Task<IActionResult> CadastroConfirm(UsuarioCadastroViewModel viewModel)
+    public async Task<IActionResult> Cadastro(UsuarioCadastroViewModel viewModel)
     {
         if (ModelState.IsValid)
         {
