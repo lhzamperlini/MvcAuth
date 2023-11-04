@@ -36,9 +36,8 @@ public class LoginController : AuthenticatedController
         try
         {
             var usuario = await _usuarioService.Autenticar(viewModel.Email, viewModel.Senha);
-
             await SalvarAutenticacao(usuario);
-            
+
             return RedirectToAction("Index", "Menu");
         }
         catch (Exception ex)
@@ -58,6 +57,7 @@ public class LoginController : AuthenticatedController
                 new Claim(ClaimTypes.Email, usuario.Email),
                 new Claim("NomeCompleto", usuario.Nome),
                 new Claim(ClaimTypes.Role, usuario.TipoUsuario.ToString()),
+                new Claim("Confirmado", usuario.Confirmado.ToString())
         };
 
         var authProperties = new AuthenticationProperties

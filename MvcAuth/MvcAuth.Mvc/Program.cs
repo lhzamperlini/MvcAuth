@@ -75,6 +75,8 @@ public class Program
                 Sobrenome = "Henrique",
                 Email = "lhzamperlini@gmail.com",
                 Senha = "lhzamperlini",
+                Ativo = true,
+                Confirmado = true,
                 TipoUsuario = TipoUsuario.Administrador
             };
 

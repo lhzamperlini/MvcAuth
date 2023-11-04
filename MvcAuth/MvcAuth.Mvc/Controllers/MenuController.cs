@@ -7,6 +7,7 @@ namespace MvcAuth.Mvc.Controllers;
 [CookieAuthorize]
 public class MenuController : AuthenticatedController
 {
+    [UserConfirmedFilter]
     public IActionResult Index()
     {
         return View();

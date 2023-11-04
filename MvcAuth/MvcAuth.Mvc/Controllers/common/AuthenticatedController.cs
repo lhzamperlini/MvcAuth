@@ -12,5 +12,11 @@ public class AuthenticatedController : Controller
     public string NomeDeUsuario { get { return User.FindFirstValue("Nome"); } }
     public string Email { get { return User.FindFirstValue(ClaimTypes.Email); } }
     public string TipoUsuario { get { return User.FindFirstValue(ClaimTypes.Role); } }
+    public bool IsConfirmado { get { return VerificaIsConfirmado(); } }
+
+    private bool VerificaIsConfirmado()
+    {
+        return true;
+    }
 
 }
