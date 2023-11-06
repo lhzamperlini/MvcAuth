@@ -41,6 +41,7 @@ public class Program
         builder.Services.AddScoped<IUsuarioService, UsuarioService>();
         builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         builder.Services.AddScoped(typeof(ICrudRepositoryBase<>), typeof(CrudRepositoryBase<>));
+        builder.Services.AddTransient<IEmailService, EmailService>();
 
         var app = builder.Build();
 

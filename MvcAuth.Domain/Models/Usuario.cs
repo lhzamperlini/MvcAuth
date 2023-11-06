@@ -7,7 +7,7 @@ public class Usuario : EntityBase
 
     public Usuario()
     {
- 
+        CodigoConfirmacao = 0000;
     }
 
     public string Nome { get; set; }
@@ -17,5 +17,6 @@ public class Usuario : EntityBase
     public string Senha { get; set; }
     public bool Ativo { get; set; }
     public bool Confirmado { get; set; }
+    public int CodigoConfirmacao { get; set; }
     public TipoUsuario TipoUsuario { get; set; }
 }

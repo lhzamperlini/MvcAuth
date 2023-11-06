@@ -7,10 +7,12 @@ namespace MvcAuth.Application.Services;
 public class UsuarioService : IUsuarioService
 {
     private readonly IUsuarioRepository _usuarioRepository;
+    private readonly IEmailService _emailService;
 
-    public UsuarioService(IUsuarioRepository usuarioRepository)
+    public UsuarioService(IUsuarioRepository usuarioRepository, IEmailService emailService)
     {
         _usuarioRepository = usuarioRepository;
+        _emailService = emailService;
     }
 
     #region Auth
@@ -48,6 +50,7 @@ public class UsuarioService : IUsuarioService
         usuario.Ativo = true;
 
         await _usuarioRepository.Cadastrar(usuario);
+        _emailService.ConfirmacaoCadastro(usuario.Email);
     }
 
     public async Task Editar(Usuario usuario)
