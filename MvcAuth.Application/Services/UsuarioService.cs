@@ -50,7 +50,7 @@ public class UsuarioService : IUsuarioService
         usuario.Ativo = true;
 
         await _usuarioRepository.Cadastrar(usuario);
-        _emailService.ConfirmacaoCadastro(usuario.Email);
+        _emailService.ConfirmacaoCadastro(usuario.Email, usuario.CodigoConfirmacao);
     }
 
     public async Task Editar(Usuario usuario)
@@ -107,6 +107,28 @@ public class UsuarioService : IUsuarioService
         usuario.Senha = novaSenha;
         await _usuarioRepository.Atualizar(usuario);
     }
+
+    public async Task Confirmar(Guid usuarioId, int codigoConfirmacao)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(usuarioId) ?? throw new Exception("Usuario não encontrado");
+        if (usuario.CodigoConfirmacao != codigoConfirmacao)
+            throw new Exception("O código de confirmação informado não é valido.");
+
+        usuario.Confirmado = true;
+        await _usuarioRepository.Atualizar(usuario);
+    }
+
+    public async Task<bool> IsConfirmado(Guid usuarioId)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(usuarioId);
+
+        if (usuario is null)
+            return false;
+
+        else return usuario.Confirmado;
+    }
+
+
 
 
     #endregion

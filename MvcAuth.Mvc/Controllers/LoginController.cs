@@ -46,31 +46,4 @@ public class LoginController : AuthenticatedController
             return RedirectToAction(nameof(Index), viewModel);
         }
     }
-
-    #region Metodos
-
-    public async Task SalvarAutenticacao(Domain.Models.Usuario usuario)
-    {
-        var claims = new List<Claim>
-        {
-                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                new Claim(ClaimTypes.Email, usuario.Email),
-                new Claim("NomeCompleto", usuario.Nome),
-                new Claim(ClaimTypes.Role, usuario.TipoUsuario.ToString()),
-                new Claim("Confirmado", usuario.Confirmado.ToString())
-        };
-
-        var authProperties = new AuthenticationProperties
-        {
-            IsPersistent = true,
-        };
-
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                            new ClaimsPrincipal(claimsIdentity), authProperties);
-    }
-
-    public async Task FazerLogout() => await HttpContext.SignOutAsync();
-
-    #endregion
 }

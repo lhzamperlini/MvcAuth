@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace MvcAuth.Application.Services;
 public class EmailService : IEmailService
 {
-    public void ConfirmacaoCadastro(string email)
+    public void ConfirmacaoCadastro(string email, int codigoConfirmacao)
     {
         var message = new MailMessage(EmailConstants.Email, email);
 
         message.Subject = "Confirmação de Cadastro";
-        message.Body = "Seu código de confirmação é: 0000";
+        message.Body = $"Seu código de confirmação é: {codigoConfirmacao}";
         message.IsBodyHtml = false;
 
         EnviarEmail(message);

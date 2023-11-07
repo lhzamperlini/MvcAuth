@@ -1,5 +1,6 @@
 ﻿using MvcAuth.Domain.Enums;
 using MvcAuth.Domain.Models.common;
+using System;
 
 namespace MvcAuth.Domain.Models;
 public class Usuario : EntityBase
@@ -7,7 +8,13 @@ public class Usuario : EntityBase
 
     public Usuario()
     {
-        CodigoConfirmacao = 0000;
+        GerarCodigoConfirmacao();
+    }
+
+    private void GerarCodigoConfirmacao()
+    {
+        var random = new Random();
+        CodigoConfirmacao = random.Next(1000, 100000);
     }
 
     public string Nome { get; set; }

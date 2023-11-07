@@ -10,5 +10,7 @@ public interface IUsuarioService
     Task Deletar(Guid Id);
     Task<List<Usuario>> ObterLista();
     Task<Usuario?> ObterPorId(Guid Id);
+    Task Confirmar(Guid usuarioId, int codigoConfirmacao);
     Task AlterarSenha(Guid usuarioId, string senhaAntiga, string novaSenha);
+    Task<bool> IsConfirmado (Guid usuarioId);
 }

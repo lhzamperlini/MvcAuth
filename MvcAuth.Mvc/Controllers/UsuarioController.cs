@@ -34,9 +34,12 @@ public class UsuarioController : AuthenticatedController
 
     [HttpGet]
     [Route("/Usuario/Confirmar-Cadastro")]
-    [AllowAnonymous]
+    [CookieAuthorize]
     public async Task<IActionResult> ConfirmarCadastro()
     {
+        if (await _usuarioService.IsConfirmado(UsuarioId))
+            return RedirectToAction("Index", "Menu");
+
         return await Task.FromResult(View());
     }
 
@@ -107,6 +110,25 @@ public class UsuarioController : AuthenticatedController
         return View(viewModel);
     }
 
+    [HttpPost]
+    [CookieAuthorize]
+    public async Task<IActionResult> Confirmar(int codigoConfirmacao)
+    {
+        try
+        {
+            await _usuarioService.Confirmar(UsuarioId, codigoConfirmacao);
+            await SalvarAutenticacao(await _usuarioService.ObterPorId(UsuarioId));
+
+            return RedirectToAction("Index", "Menu");
+        }
+        catch (Exception ex)
+        {
+            TempData["Erro"] = ex.Message;
+
+            return View(nameof(ConfirmarCadastro));
+        }
+    }
+
     [HttpPost("/Alterar-Senha")]
     public async Task<IActionResult> AlterarSenha(UsuarioAlterarSenha viewModel)
     {
@@ -124,8 +146,8 @@ public class UsuarioController : AuthenticatedController
                 TempData["Sucesso"] = "Sua senha foi atualizada com sucesso!";
                 return View();
             }
-            
-            return View(viewModel); 
+
+            return View(viewModel);
         }
         catch (Exception ex)
         {

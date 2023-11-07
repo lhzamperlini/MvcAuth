@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 namespace MvcAuth.Domain.Interfaces.Services;
 public interface IEmailService
 {
-    void ConfirmacaoCadastro(string email);
+    void ConfirmacaoCadastro(string email, int codigoConfirmacao);
     void EnviarEmail(MailMessage email);
 }
