@@ -13,20 +13,23 @@ public class UserConfirmedFilter : ActionFilterAttribute
     {
         var usuarioAtual = filterContext.HttpContext.User;
 
-        var serviceManager = filterContext.HttpContext.RequestServices;
-        var usuarioService = serviceManager.GetService<IUsuarioService>();
-
-        if (!usuarioService.IsConfirmado(new Guid(usuarioAtual.FindFirstValue(ClaimTypes.NameIdentifier))).Result)
+        if(usuarioAtual.Claims.Count() > 0)
         {
-            var isConfirmado = usuarioAtual.FindFirstValue("Confirmado");
-            var isRotaConfirmarCadastro = filterContext.RouteData.Values.Values.Contains("ConfirmarCadastro");
+            var serviceManager = filterContext.HttpContext.RequestServices;
+            var usuarioService = serviceManager.GetService<IUsuarioService>();
 
-            if (isConfirmado != null && !isRotaConfirmarCadastro)
+            if (!usuarioService.IsConfirmado(new Guid(usuarioAtual.FindFirstValue(ClaimTypes.NameIdentifier))).Result)
             {
-                if (!isConfirmado.ToLower().Equals("true"))
+                var isConfirmado = usuarioAtual.FindFirstValue("Confirmado");
+                var isRotaConfirmarCadastro = filterContext.RouteData.Values.Values.Contains("ConfirmarCadastro");
+
+                if (isConfirmado != null && !isRotaConfirmarCadastro)
                 {
-                    filterContext.Result = new RedirectToRouteResult(new { action = "confirmar-cadastro", controller = "usuario" });
-                    base.OnActionExecuted(filterContext);
+                    if (!isConfirmado.ToLower().Equals("true"))
+                    {
+                        filterContext.Result = new RedirectToRouteResult(new { action = "confirmar-cadastro", controller = "usuario" });
+                        base.OnActionExecuted(filterContext);
+                    }
                 }
             }
         }
