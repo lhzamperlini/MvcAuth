@@ -1,8 +1,4 @@
 using MvcAuth.CrossCutting.IoC;
-using MvcAuth.Domain.Enums;
-using MvcAuth.Domain.Interfaces.Repositories;
-using MvcAuth.Domain.Interfaces.Services;
-using MvcAuth.Domain.Models;
 
 namespace MvcAuth.Mvc;
 
