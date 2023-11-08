@@ -11,7 +11,7 @@ public class Usuario : EntityBase
         GerarCodigoConfirmacao();
     }
 
-    private void GerarCodigoConfirmacao()
+    public void GerarCodigoConfirmacao()
     {
         var random = new Random();
         CodigoConfirmacao = random.Next(1000, 100000);

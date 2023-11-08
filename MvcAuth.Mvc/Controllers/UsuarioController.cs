@@ -49,6 +49,24 @@ public class UsuarioController : AuthenticatedController
         return await Task.FromResult(View());
     }
 
+    [HttpGet("/Usuario/novo-codigo-confirmacao")]
+    [CookieAuthorize]
+    public async Task<IActionResult> GerarNovoCodigoConfirmacao()
+    {
+        try
+        {
+            await _usuarioService.NovoCodigoConfirmacao(UsuarioId);
+            TempData["Sucesso"] = "Um email foi enviado com um novo código de confirmação, verifique sua caixa de entrada.";
+            return View(nameof(ConfirmarCadastro));
+        }
+        catch
+        {
+            TempData["Erro"] = "Algo deu errado ao enviar um novo código de confirmação, tente novamente mais tarde.";
+            return View(nameof(ConfirmarCadastro));
+        }
+    }
+
+
     #endregion
 
     #region Ações Usuario

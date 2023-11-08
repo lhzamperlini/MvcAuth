@@ -128,7 +128,14 @@ public class UsuarioService : IUsuarioService
         else return usuario.Confirmado;
     }
 
+    public async Task NovoCodigoConfirmacao(Guid usuarioId)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(usuarioId) ?? throw new Exception("Usuario não encontrado.");
+        usuario.GerarCodigoConfirmacao();
+        await _usuarioRepository.Atualizar(usuario);
 
+        _emailService.ConfirmacaoCadastro(usuario.Email, usuario.CodigoConfirmacao);
+    }
 
 
     #endregion

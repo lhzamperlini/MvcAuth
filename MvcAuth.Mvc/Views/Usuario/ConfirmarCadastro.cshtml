@@ -1,5 +1,6 @@
 ﻿@{
     var erro = TempData["Erro"] ?? "";
+    var sucesso = TempData["Sucesso"] ?? "";
 }
 
 @if (!string.IsNullOrEmpty(erro.ToString()))
@@ -9,7 +10,16 @@
     </div>
 }
 
+@if (!string.IsNullOrEmpty(sucesso.ToString()))
+{
+    <div class="alert alert-success" role="alert">
+        @sucesso
+    </div>
+}
+
 <form asp-controller="Usuario" asp-action="Confirmar">
     <input type="number" name="codigoConfirmacao" id="codigoConfirmacao"/>
     <input type="submit" value="Confirmar" class="btn btn-info"/>
 </form>
+
+<a asp-action="GerarNovoCodigoConfirmacao" asp-controller="Usuario">Gerar novo código de confirmação</a>

@@ -85,7 +85,7 @@ public class Program
 
             if (!usuarioExiste)
             {
-                await userManager.Cadastrar(usuario);
+                await userRepository.Cadastrar(usuario);
             }
         }
 

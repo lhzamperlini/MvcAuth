@@ -13,4 +13,5 @@ public interface IUsuarioService
     Task Confirmar(Guid usuarioId, int codigoConfirmacao);
     Task AlterarSenha(Guid usuarioId, string senhaAntiga, string novaSenha);
     Task<bool> IsConfirmado (Guid usuarioId);
+    Task NovoCodigoConfirmacao(Guid usuarioId);
 }
