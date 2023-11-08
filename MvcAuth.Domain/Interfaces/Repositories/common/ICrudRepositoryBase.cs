@@ -1,5 +1,7 @@
-﻿namespace MvcAuth.Domain.Interfaces.Repositories.common;
-public interface ICrudRepositoryBase<T> where T : class
+﻿using MvcAuth.Domain.Models.common;
+
+namespace MvcAuth.Domain.Interfaces.Repositories.common;
+public interface ICrudRepositoryBase<T> : IRepositoryBase where T : EntityBase
 {
     IQueryable<T> Query();
     Task Salvar();

@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MvcAuth.Domain.Interfaces.Repositories.common;
+using MvcAuth.Domain.Models.common;
 using MvcAuth.Repository.Data;
 
 namespace MvcAuth.Repository.Repositories.common;
-public class CrudRepositoryBase<T> : ICrudRepositoryBase<T> where T : class
+public abstract class CrudRepositoryBase<T> : RepositoryBase, ICrudRepositoryBase<T> where T : EntityBase
 {
     private readonly DbSet<T> _dbSet;
     private readonly MainDbContext _context;
